@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Thanh toán - Cotton USA</title>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="images/logo.avif" alt="Cotton USA"></div>
+        <ul class="MENU">
+            <li><a href="index.html">TRANG CHỦ</a></li>
+            <li class="has-submenu"><a href="quan.html">QUẦN <span class="arrow">▼</span></a>
+                <ul class="sub-menu"><li><a href="quan.html?type=ong-suong">Quần Ống Suông</a></li><li><a href="quan.html?type=jogger">Quần Jogger</a></li></ul>
+            </li>
+            <li class="has-submenu"><a href="sweater.html">SWEATERS <span class="arrow">▼</span></a>
+                <ul class="sub-menu"><li><a href="sweater.html?id=US001">University Sweater</a></li><li><a href="sweater.html?id=CS001">Car Sweater</a></li><li><a href="sweater.html?id=FS001">Floral Sweater</a></li></ul>
+            </li>
+            <li class="has-submenu"><a href="hoodies.html">HOODIES <span class="arrow">▼</span></a>
+                <ul class="sub-menu"><li><a href="hoodies.html?id=BH001">Basic Hoodie</a></li><li><a href="hoodies.html?id=PH001">Porsche Hoodie</a></li><li><a href="hoodies.html?id=USAH001">USA Hoodie</a></li></ul>
+            </li>
+            <li class="has-submenu"><a href="aothundaitay.html">ÁO THUN <span class="arrow">▼</span></a>
+                <ul class="sub-menu">
+                    <li><a href="aothun.html">Áo Thun ngắn tay <span class="arrow">▼</span></a>
+                        <ul class="sub-menu"><li><a href="aothun.html?id=W001">Áo Thun Watch</a></li><li><a href="aothun.html?id=POR001">Áo Thun Poscher</a></li><li><a href="aothun.html?id=USA001">Áo Thun USA</a></li></ul>
+                    </li>
+                    <li><a href="aothundaitay.html">Áo Thun dài tay <span class="arrow">▼</span></a>
+                        <ul class="sub-menu"><li><a href="aothundaitay.html?id=RP001">Áo Thun Dài Tay Rapper</a></li><li><a href="aothundaitay.html?id=POR001">Áo Thun Dài Tay Poscher</a></li><li><a href="aothundaitay.html?id=USA001">Áo Thun Dài Tay USA</a></li></ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="other">
+            <div class="search-icon"><input type="text" placeholder="Tìm kiếm sản phẩm..."><i class="fas fa-search"></i></div>
+            <div class="cart-wrapper">
+                <button class="cart-icon-btn" id="cartBtn"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartBadge">0</span></button>
+                <div class="cart-dropdown" id="cartDropdown">
+                    <div class="cart-dropdown-header"><span>Giỏ hàng</span><span id="cartItemCount">0 sản phẩm</span></div>
+                    <div class="cart-items-list" id="cartItemsList"><div class="cart-empty-msg"><i class="fas fa-shopping-bag"></i>Giỏ hàng trống</div></div>
+                    <div class="cart-dropdown-footer" id="cartFooter" style="display:none">
+                        <div class="cart-total-row"><span>Tổng cộng:</span><span class="cart-total-amount" id="cartTotal">0₫</span></div>
+                        <button class="cart-checkout-btn" onclick="checkout()">Thanh toán ngay →</button>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-wrapper">
+                <button class="auth-icon-btn" id="authBtn"><i class="fas fa-user"></i></button>
+                <div class="auth-dropdown" id="authDropdown">
+                    <div id="authLoggedOut">
+                        <div class="auth-tabs"><button class="auth-tab active" onclick="switchTab('login')">Đăng nhập</button><button class="auth-tab" onclick="switchTab('register')">Đăng ký</button></div>
+                        <div class="auth-form-panel" id="panelLogin">
+                            <div class="auth-error" id="loginError"></div>
+                            <div class="auth-field"><label>Email</label><input type="email" id="loginEmail" placeholder="example@email.com"></div>
+                            <div class="auth-field"><label>Mật khẩu</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+                            <button class="auth-submit-btn" onclick="doLogin()">Đăng nhập</button>
+                        </div>
+                        <div class="auth-form-panel" id="panelRegister" style="display:none">
+                            <div class="auth-error" id="registerError"></div>
+                            <div class="auth-field"><label>Họ tên</label><input type="text" id="regName" placeholder="Nguyễn Văn A"></div>
+                            <div class="auth-field"><label>Email</label><input type="email" id="regEmail" placeholder="example@email.com"></div>
+                            <div class="auth-field"><label>Mật khẩu</label><input type="password" id="regPassword" placeholder="Tối thiểu 6 ký tự"></div>
+                            <button class="auth-submit-btn" onclick="doRegister()">Tạo tài khoản</button>
+                        </div>
+                    </div>
+                    <div id="authLoggedIn" style="display:none">
+                        <div class="auth-avatar" id="authAvatar">A</div>
+                        <div class="auth-username" id="authUsername"></div>
+                        <div class="auth-useremail" id="authUserEmail"></div>
+                        <button class="auth-logout-btn" onclick="doLogout()">Đăng xuất</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="dropdown-overlay" id="dropdownOverlay"></div>
+
+    <section class="chuyentien">
+        <div class="container">
+            <div class="chuyentien-top-wrap">
+                <div class="chuyentien-top">
+                    <div class="chuyentien-top-item"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="chuyentien-top-adress chuyentien-top-item"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="chuyentien-top-chuyentien chuyentien-top-item"><i class="fas fa-money-check-alt"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="chuyentien-content row">
+                <div class="chuyentien-content-left">
+                    <div class="chuyentien-content-left-phuongthuc-giaohang">
+                        <p style="font-weight: bold;">Phương thức giao hàng</p>
+                        <div class="chuyentien-content-left-phuongthuc-giaohang-item">
+                            <input type="radio" name="phuongthuc-giaohang" id="giaohangnhanh" checked>
+                            <label for="giaohangnhanh">Giao hàng nhanh</label>
+                        </div>
+                    </div>
+                    <div class="chuyentien-content-left-phuongthuc-thanhtoan">
+                        <p style="font-weight: bold;">Phương thức thanh toán</p>
+                        <p>Mọi giao dịch đều được bảo mật. Thông tin thẻ sẽ không bao giờ được lưu lại.</p>
+                        <div class="chuyentien-content-left-phuongthuc-thanhtoan-item">
+                            <input type="radio" name="phuongthuc-thanhtoan" id="thanhtoankhinhanhang">
+                            <label for="thanhtoankhinhanhang">Thanh toán khi nhận hàng</label>
+                        </div>
+                        <div class="chuyentien-content-left-phuongthuc-thanhtoan-item">
+                            <input type="radio" name="phuongthuc-thanhtoan" id="chuyenkhoan">
+                            <label for="chuyenkhoan">Chuyển khoản ngân hàng</label>
+                            <div class="chuyentien-content-left-phuongthuc-thanhtoan-item-img">
+                                <img src="images/nganhang.png" alt="Ngân hàng">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chuyentien-content-right">
+                    <div class="chuyentien-content-right-button">
+                        <input type="text" placeholder="Nhập mã giảm giá">
+                        <button><i class="fas fa-check"></i></button>
+                    </div>
+                    <div class="chuyentien-content-right-thanhtoan">
+                        <button id="btnTiepTucThanhToan">TIẾP TỤC THANH TOÁN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL THÀNH CÔNG (COD) -->
+    <div class="modal-overlay" id="modalSuccess">
+        <div class="modal-box modal-success">
+            <button class="modal-close" onclick="closeModal('modalSuccess')">&times;</button>
+            <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h2>Đặt hàng thành công!</h2>
+            <p>Cảm ơn bạn đã mua sắm tại Cotton USA.</p>
+            <div class="order-info" id="orderInfo"></div>
+            <button class="btn-confirm" onclick="closeModal('modalSuccess'); window.location.href='index.html'">Tiếp tục mua sắm</button>
+        </div>
+    </div>
+
+    <!-- MODAL QR CHUYỂN KHOẢN -->
+    <div class="modal-overlay" id="modalQR">
+        <div class="modal-box modal-qr">
+            <button class="modal-close" onclick="closeModal('modalQR')">&times;</button>
+            <h2>Chuyển khoản ngân hàng</h2>
+            <div class="qr-subtitle">Quét mã QR để thanh toán</div>
+            <div class="qr-img-wrap" id="qrImgWrap"><div class="qr-spinner"></div></div>
+            <div class="bank-info">
+                <div><span class="label">Ngân hàng:</span> <span class="val">MB Bank</span></div>
+                <div><span class="label">Số tài khoản:</span> <span class="val">200308204</span></div>
+                <div><span class="label">Chủ tài khoản:</span> <span class="val">LE MINH QUAN</span></div>
+                <div><span class="label">Số tiền:</span> <span class="val amount-val" id="qrAmount">0₫</span></div>
+                <div><span class="label">Nội dung CK:</span> <span class="val" id="qrContent">COTTONUSA...</span></div>
+            </div>
+            <div class="qr-note"><i class="fas fa-info-circle"></i> Sau khi chuyển khoản, đơn hàng sẽ được xác nhận trong vòng 24h.</div>
+            <button class="btn-done" onclick="closeModal('modalQR'); window.location.href='index.html'">Đã thanh toán</button>
+        </div>
+    </div>
+
+    <script src="js/cart-auth.js"></script>
+    <script>
+        // ================= CART/AUTH DROPDOWN (Fix lỗi tương tác: xóa & thanh toán & login/register) =================
+        (function initHeaderDropdowns() {
+            const cartBtn = document.getElementById('cartBtn');
+            const cartDropdown = document.getElementById('cartDropdown');
+            const authBtn = document.getElementById('authBtn');
+            const authDropdown = document.getElementById('authDropdown');
+            const overlay = document.getElementById('dropdownOverlay');
+
+            if (!cartBtn || !cartDropdown || !authBtn || !authDropdown || !overlay) return;
+
+            function closeAll() {
+                cartDropdown.classList.remove('open');
+                authDropdown.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+
+            cartBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = cartDropdown.classList.contains('open');
+                closeAll();
+                if (!isOpen) {
+                    cartDropdown.classList.add('open');
+                    overlay.classList.add('active');
+                }
+            });
+
+            authBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = authDropdown.classList.contains('open');
+                closeAll();
+                if (!isOpen) {
+                    authDropdown.classList.add('open');
+                    overlay.classList.add('active');
+                }
+            });
+
+            cartDropdown.addEventListener('click', function (e) { e.stopPropagation(); });
+            authDropdown.addEventListener('click', function (e) { e.stopPropagation(); });
+
+            overlay.addEventListener('click', function () { closeAll(); });
+            document.addEventListener('click', function () { closeAll(); });
+        })();
+
+        // Helper lấy giỏ hàng (dùng chung với cart-auth.js)
+        function getCart() {
+            const cart = localStorage.getItem('cottonusa_cart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function formatPrice(price) {
+            return price.toLocaleString('vi-VN') + '₫';
+        }
+
+        // Đóng modal
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Mở modal và cập nhật nội dung nếu cần
+        function openModal(id) {
+            if (id === 'modalSuccess') {
+                const cart = getCart();
+                let total = 0;
+                let itemsHtml = '';
+                if (cart.length === 0) {
+                    // Trường hợp mua ngay từ trang chi tiết (cottonusa_order)
+                    const order = JSON.parse(localStorage.getItem('cottonusa_order') || '{}');
+                    if (order.name) {
+                        total = order.total || (order.priceNum * (order.qty || 1));
+                        itemsHtml = `<div>• ${order.name} (x${order.qty || 1})</div>`;
+                    }
+                } else {
+                    cart.forEach(item => {
+                        total += item.price * item.qty;
+                        itemsHtml += `<div>• ${item.name} (x${item.qty})</div>`;
+                    });
+                }
+                // Lấy thông tin khách hàng từ localStorage (nếu có lưu từ trang giao hàng)
+                let customerName = 'Khách lẻ';
+                let customerAddress = 'Chưa cập nhật';
+                const savedInfo = localStorage.getItem('cottonusa_customer_info');
+                if (savedInfo) {
+                    try {
+                        const info = JSON.parse(savedInfo);
+                        if (info.name) customerName = info.name;
+                        if (info.address) customerAddress = info.address;
+                    } catch(e) {}
+                }
+                document.getElementById('orderInfo').innerHTML = `
+                    <div><span>Họ tên:</span> ${customerName}</div>
+                    <div><span>Địa chỉ:</span> ${customerAddress}</div>
+                    <div><span>Sản phẩm:</span> ${itemsHtml || 'Không có sản phẩm'}</div>
+                    <div><span>Tổng tiền:</span> ${formatPrice(total)}</div>
+                `;
+            }
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Xử lý sự kiện thanh toán
+        
+document.getElementById('btnTiepTucThanhToan').addEventListener('click', function () {
+
+    const isCOD = document.getElementById('thanhtoankhinhanhang').checked;
+    const isTransfer = document.getElementById('chuyenkhoan').checked;
+
+    if (!isCOD && !isTransfer) {
+        alert('Vui lòng chọn phương thức thanh toán!');
+        return;
+    }
+
+    const customerInfo = JSON.parse(
+        localStorage.getItem('cottonusa_customer_info') || '{}'
+    );
+
+    if (!customerInfo.name || !customerInfo.phone || !customerInfo.address) {
+        alert('Thiếu thông tin khách hàng');
+        return;
+    }
+
+    let items = [];
+    const cart = getCart();
+
+    if (cart.length > 0) {
+
+        items = cart.map(item => ({
+            code: item.id || item.product_code || '',
+            name: item.name,
+            quantity: item.qty || 1,
+            price: item.price || 0,
+            size: item.size || '',
+            color: item.color || ''
+        }));
+
+    } else {
+
+        const order = JSON.parse(
+            localStorage.getItem('cottonusa_order') || '{}'
+        );
+
+        if (!order.name) {
+            alert('Không có sản phẩm để thanh toán');
+            return;
+        }
+
+        items.push({
+            code: order.id || order.product_code || '',
+            name: order.name,
+            quantity: order.qty || 1,
+            price: order.priceNum || 0,
+            size: order.size || '',
+            color: order.color || ''
+        });
+    }
+    console.log(items);
+    fetch('/cottonusa/api/orders.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: customerInfo.name,
+            phone: customerInfo.phone,
+            address: customerInfo.address,
+            payment_method: isCOD ? 'cod' : 'bank',
+            items: items
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        console.log(data);
+
+        if (!data.success) {
+            alert(data.error || 'Tạo đơn hàng thất bại');
+            return;
+        }
+
+        localStorage.removeItem('cottonusa_cart');
+        localStorage.removeItem('cottonusa_order');
+
+        if (isCOD) {
+            openModal('modalSuccess');
+        } else {
+            openModal('modalQR');
+        }
+
+    })
+    .catch(error => {
+        console.error(error);
+        alert('Không kết nối được tới server');
+    });
+
+});
+
+    </script>
+</body>
+</html>
